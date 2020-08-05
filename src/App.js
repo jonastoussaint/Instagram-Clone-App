@@ -5,6 +5,7 @@ import { db, auth } from './firebase';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import { Button, Input } from '@material-ui/core';
+import ImageUpload from './ImageUpload';
 
 function getModalStyle() {
   const top = 50;
@@ -43,6 +44,7 @@ function App() {
   const [email, setEmail] = useState('');
   const [user, setUser] = useState(null);
 
+
   //useEffects runs a piece of code based on a condition.
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
@@ -66,7 +68,7 @@ function App() {
 
   useEffect(() => {
     //If you leave this blank it will run once. when the page loads
-    db.collection('posts').onSnapshot(snapshot => { 
+    db.collection('posts').orderBy('timestamp', 'desc').onSnapshot(snapshot => { 
       setPosts(snapshot.docs.map(doc => ({ 
         id: doc.id, 
         post: doc.data()
@@ -101,11 +103,11 @@ function App() {
 
   }
 
+  /*Header Container*/
+  /*This name convention is call BEM */
   return (
     <div className="app">   
-      {/*Header Container*/}
-      {/*This name convention is call BEM */}
-
+    
       <Modal
         open={open}
         /*Inline function to close 
@@ -187,19 +189,20 @@ function App() {
           src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
           alt=""
         />
+        {/*Log in and Sign out */}
+
+        {user ? (<Button onClick ={() => auth.signOut()}>Log out</Button>
+        ): 
+        ( 
+          <div className="app__loginContainer" >
+            <Button onClick ={() => setOpenSignIn(true)}>Sign In</Button>
+            <Button onClick ={() => setOpen(true)}>Sign Up</Button>
+          </div>
+        )}
+        
       </div>
 
-      {/*Log in and Sign out */}
-
-      {user ? (<Button onClick ={() => auth.signOut()}>Log out</Button>
-      ): 
-      ( 
-        <div className="app__loginContainer" >
-          <Button onClick ={() => setOpenSignIn(true)}>Sign In</Button>
-          <Button onClick ={() => setOpen(true)}>Sign Up</Button>
-        </div>
-
-      )}
+      
      
       <h1> Hello World Program Mega Supper ahdsuivfabdsipvudsfbvidsfb🦾</h1>
       
@@ -209,7 +212,12 @@ function App() {
           <Post key={id} username={post.username} caption={post.caption} imageUrl={post.imageUrl}/>
         ))
       }
-    
+      {user?.displayName ? (
+       <ImageUpload username={user.displayName}/>
+      ): (
+      <h3>Sorry You need to login to upload</h3>
+      )}
+      
     </div>
   );
 }
