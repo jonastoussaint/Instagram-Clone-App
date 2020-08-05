@@ -37,6 +37,7 @@ function App() {
   //Create a state to post, state is how you set variables in react
   const [posts, setPosts] = useState([]); //This is a hook 
   const [open, setOpen] = useState(false);
+  const [openSignIn, setOpenSignIn] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
@@ -85,8 +86,20 @@ function App() {
     })
   })
     .catch((error) => alert(error.message));
+
+    setOpen(false);
   }
 
+  const signIn = (event) => {
+    event.preventDefault();
+
+    auth
+    .signInWithEmailAndPassword(email, password)
+    .catch((error) => alert(error.message));
+
+    setOpenSignIn(false);
+
+  }
 
   return (
     <div className="app">   
@@ -134,6 +147,40 @@ function App() {
         </div>
       </Modal>
       
+      <Modal
+        open={openSignIn}
+        /*Inline function to close 
+        this closes the modal when you click outside of it*/
+        onClose={() =>  setOpenSignIn(false)} 
+      >
+       
+        <div style={modalStyle} className={classes.paper}>
+        <form className="app__signup">
+          <center>
+              <img
+                className="app__headerImage"  
+                src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
+                alt=""
+              />
+          </center>
+             <Input
+              placeholder ="email"
+              type="text"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+             />
+            <Input
+              placeholder ="password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <Button type="submit" onClick={signIn}>Sign In</Button>
+        </form>
+          
+        </div>
+      </Modal>
+
       <div className="app__header">
         <img
           className="app__headerImage"
@@ -142,7 +189,18 @@ function App() {
         />
       </div>
 
-      <Button onClick ={() => setOpen(true)}>Sign Up</Button>
+      {/*Log in and Sign out */}
+
+      {user ? (<Button onClick ={() => auth.signOut()}>Log out</Button>
+      ): 
+      ( 
+        <div className="app__loginContainer" >
+          <Button onClick ={() => setOpenSignIn(true)}>Sign In</Button>
+          <Button onClick ={() => setOpen(true)}>Sign Up</Button>
+        </div>
+
+      )}
+     
       <h1> Hello World Program Mega Supper ahdsuivfabdsipvudsfbvidsfb🦾</h1>
       
       {
