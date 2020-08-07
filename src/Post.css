@@ -13,8 +13,7 @@
 }
 
 .post__text {
-    font-weight: normal;  
-    align-items: right;
+    font-weight: normal;   
     padding: 20px; 
 }
 
@@ -26,4 +25,28 @@
 
 .post__avatar {
     margin-right: 10px;
+}
+
+.post__commentBox {
+    display:  flex;
+    margin-top: 10px;
+}
+
+.post__input {
+    flex: 1;
+    border: none;
+    padding: 10px;
+    border-top: 1px solid lightgray;
+}
+ 
+.post__button  { 
+    flex: 0;
+    border: none;
+    color: #6082a3;
+    background-color: transparent;
+    border-top: 1px solid lightgray;
+}
+
+.post__comment {
+    padding: 20px;
 }

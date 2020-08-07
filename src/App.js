@@ -114,9 +114,9 @@ function App() {
         /*Inline function to close 
         this closes the modal when you click outside of it*/
         onClose={() =>  setOpen(false)} 
-      >
+    >
        
-        <div style={modalStyle} className={classes.paper}>
+    <div style={modalStyle} className={classes.paper}>
 
         <form className="app__signup">
         <center>
@@ -192,26 +192,26 @@ function App() {
         />
         {/*Log in and Sign out */}
 
-        {user ? (<Button onClick ={() => auth.signOut()}>Log out</Button>
-        ): 
-        ( 
-          <div className="app__loginContainer" >
+        {user ? (
+          <Button onClick ={() => auth.signOut()}>Log out</Button>
+        ):(
+          <div className="app__loginContainer">
             <Button onClick ={() => setOpenSignIn(true)}>Sign In</Button>
             <Button onClick ={() => setOpen(true)}>Sign Up</Button>
           </div>
         )}
       </div>
-      
+    
       <div className="app__posts">
-        <div className="app_postsLeft">
+        <div className="app_postsLeft">         
           {
             //map is a ESX function
             posts.map(({id, post}) => (
-              <Post key={id} username={post.username} caption={post.caption} imageUrl={post.imageUrl}/>
+              <Post key={id} postId={id} user={user} username={post.username} caption={post.caption} imageUrl={post.imageUrl}/>
             ))
           }
-        </div>
-        <div className="app_postRight">
+        </div> 
+        <div className="app_postsRight">
             <InstagramEmbed
               url='https://www.instagram.com/p/B_uf9dmAGPw/'
               maxWidth={320}
@@ -226,14 +226,14 @@ function App() {
             />
         </div>
         
-      </div> 
+      </div>
       
-
+      
       
       {user?.displayName ? (
        <ImageUpload username={user.displayName}/>
       ): (
-      <h3>Sorry You need to login to upload</h3>
+        <h3>Sorry You need to login to upload</h3>
       )}
       
     </div>
