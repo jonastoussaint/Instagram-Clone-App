@@ -41,6 +41,21 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 
 ### `npm i react-modal`
 
+### `Deploying App`
+Do 
+1. Firebase login
+2. Y
+3. Firebase init
+4. Hosting
+5. Existing Project
+6. select Project
+7. type build for React projects
+8. Y because React is a single page app
+9. npm run build
+10. firebase deploy
+
+Deployed Website: https://instagram-clone-8b271.web.app
+
 ## Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
